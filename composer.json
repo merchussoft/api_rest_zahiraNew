@@ -1,0 +1,16 @@
+{
+    "name": "merchussoft/api_rest_zahira-new",
+    "description": "api rest para la dministracion del salon zahira en manejo de apk y angular",
+    "type": "library",
+    "license": "Cergersoft",
+    "authors": [
+        {
+            "name": "daniel merchan",
+            "email": "merchussoft@hotmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "slim/slim": "3.*"
+    }
+}
