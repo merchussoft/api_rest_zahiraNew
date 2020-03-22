@@ -13,7 +13,7 @@ class Database {
         $_conexion->Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
         $_conexion->setFetchMode(ADODB_FETCH_ASSOC);
         $_conexion->Execute("SET NAMES 'utf8'");
-        $_conexion->debug = true;
+//        $_conexion->debug = true;
         return $_conexion;
     }
 
