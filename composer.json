@@ -11,6 +11,8 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "slim/slim": "3.*"
+        "php": "^5.6|^7.0",
+        "slim/slim": "^3.12",
+        "adodb/adodb-php": "^5.20"
     }
 }
