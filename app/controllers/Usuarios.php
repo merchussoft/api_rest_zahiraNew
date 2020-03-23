@@ -19,7 +19,7 @@ class Usuarios {
             foreach ($result_login as $key => $value) {
                 $_SESSION[$key] = $value;
             }
-            $return = ["data" => $_SESSION, "validate" => 1];
+            $return = [$_SESSION, "validate" => 1];
         }
 //        $data["ip_remote"] = $_SERVER['REMOTE_ADDR'];
         return $return;
