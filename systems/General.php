@@ -58,4 +58,15 @@ class General {
     }
 
 
+    function generarCodigoSeguridad() {
+        $pattern = "ABCDEFGHJKMNPQRTUVWXYZ12346789";
+        $longitud = LENGTHCODESECURITY;
+        $max = strlen($pattern) - 1;
+        $codigoSeguridad = "";
+        for ($x = 0; $x < $longitud; $x++) {
+            $codigoSeguridad .= $pattern{mt_rand(0, $max)};
+        }
+        return $codigoSeguridad;
+    }
+
 }

@@ -14,14 +14,15 @@ class Usuarios {
         $return = ["message" => "Usuario o password incorrectos", "validate" => 0];
         $data["usuario"] = $this->general->limpiarString($data["usuario"]);
         $data["password"] = $this->general->encripterPass($this->general->limpiarString($data["password"], true));
-        $result_login = $this->model_usuario->loginModel($data)[0];
+        $result_login = $this->model_usuario->loginModel($data);
         if (count($result_login)) {
-            foreach ($result_login as $key => $value) {
+            foreach ($result_login[0] as $key => $value) {
                 $_SESSION[$key] = $value;
             }
+            $_SESSION["token"] = $this->general->encripterPass($this->general->generarCodigoSeguridad());
             $return = [$_SESSION, "validate" => 1];
+            $_SESSION["base"] = "zahyra";
         }
-//        $data["ip_remote"] = $_SERVER['REMOTE_ADDR'];
         return $return;
     }
 }

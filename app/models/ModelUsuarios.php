@@ -3,6 +3,7 @@
 class ModelUsuarios extends Database {
 
     function __construct() {
+        $this->_conexion = Database::modelInstance("Usuario");
     }
 
     function loginModel($data=[]){
@@ -12,6 +13,6 @@ class ModelUsuarios extends Database {
         ."INNER JOIN data_usuarios as du ON du.cod_usuario = u.cod_usuario "
         ."INNER JOIN eps as e ON e.cod_eps = du.cod_eps "
         ."WHERE u.usuario = ? AND u.password = ? AND u.activo = 1";
-        return $this->execute_query($sql, $data);
+        return $this->_conexion->execute_query($sql, $data);
     }
 }
