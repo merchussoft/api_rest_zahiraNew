@@ -2,7 +2,7 @@
 @define("LOGS", RAIZ . "/log/");
 
 // se usa para el debug de la base de datos
-@define('DEBUG', true);
+@define("DEBUG", true);
 
 // longitud para el generar un codigo de seguridad
 CONST LENGTHCODESECURITY = 10;

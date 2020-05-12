@@ -7,11 +7,11 @@ class ModelUsuarios extends Database {
     }
 
     function loginModel($data=[]){
-        $sql = "SELECT u.nombre, u.apellido, u.documento, u.usuario, u.createAt, "
-        ."du.email, du.cumpleanos, du.telefono, du.direccion, du.imagen, CONCAT(e.nombre, ' ', e.regimen) as eps "
+        $sql = "SELECT u.cod_usuario as codigo, u.nombre, u.apellido, u.usuario, du.imagen, du.cod_perfil,  p.nombre as perfil "
         ."FROM usuarios as u "
         ."INNER JOIN data_usuarios as du ON du.cod_usuario = u.cod_usuario "
         ."INNER JOIN eps as e ON e.cod_eps = du.cod_eps "
+        ."INNER JOIN perfiles as p ON p.cod_perfil = du.cod_perfil "
         ."WHERE u.usuario = ? AND u.password = ? AND u.activo = 1";
         return $this->_conexion->execute_query($sql, $data);
     }
