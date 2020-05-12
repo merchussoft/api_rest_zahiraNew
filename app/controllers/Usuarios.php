@@ -21,8 +21,17 @@ class Usuarios {
             }
             $_SESSION["token"] = $this->general->encripterPass($this->general->generarCodigoSeguridad());
             $return = [$_SESSION, "validate" => 1];
-            $_SESSION["base"] = "zahyra";
+            $_SESSION["base"] = "zahyra_salon";
         }
         return $return;
+    }
+
+    function cerrarSession(){
+      $jsondata = ["mensaje" => "Error al cerrar sesion"];
+      if (isset($_SESSION['usuario'])) {
+        session_destroy();
+        $jsondata = ["mensaje" => "Sesion cerrada exitosamente"];
+      }
+      return $jsondata;
     }
 }

@@ -26,3 +26,11 @@ $app->post("/zahira_api/login", function (Request $request, Response $response) 
             ->write(json_encode(array('error' => array("text" => $e->getMessage()))));
     }
 });
+
+$app->get("/cerrar_session", function(Request $request, Response $response){
+  $usuarios = new Usuarios();
+  return $response
+    ->withStatus(200)
+    ->withHeader('Content-Type', 'application/json')
+    ->write(json_encode($usuarios->cerrarSession()));
+});

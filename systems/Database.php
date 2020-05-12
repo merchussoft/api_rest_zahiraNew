@@ -13,6 +13,7 @@ class Database {
     private $_debugdb = false;
     private $_debug = false;
     public $_errores;
+    private $_user;
 
     function __construct($model) {
         $this->_host = DB_HOST;
@@ -22,6 +23,7 @@ class Database {
         $this->_debug = DEBUG;
         $this->_model = $model;
         $this->ConexionAdodb();
+        $this->_user = isset($_SESSION['usuario']) ? $_SESSION['usuario'] : "Servidor_inicio";
     }
 
     public function ConexionAdodb() {
@@ -32,7 +34,6 @@ class Database {
     }
 
     function execute_query($sql = "", $params = []) {
-
         $this->_cursor = self::$_conexion->Execute($sql, $params);
         $this->estatusConexion($sql, $params);
         return $this->_cursor->GetArray();
@@ -89,7 +90,7 @@ class Database {
         if (!$this->_cursor) {
             $this->_errores['numero'] = self::$_conexion->ErrorNo();
             $this->_errores['mensaje'] = self::$_conexion->ErrorMsg();
-            $this->logDatabase("Error Hora inicio:$Hora_Inicio|Hora Final:$hora_termina | No error  " . $this->_errores['numero'] . " | usuario " . $this->_user["nombre"] . "| :" . $this->_errores['numero'] . "y mensaje " . $this->_errores['mensaje'] . "\r\n En la consulta : " . $sql . " data " . json_encode($parametros), "error");
+            $this->logDatabase("Error Hora inicio:$Hora_Inicio|Hora Final:$hora_termina | No error  " . $this->_errores['numero'] . " | usuario " . $this->_user . "| :" . $this->_errores['numero'] . "y mensaje " . $this->_errores['mensaje'] . "\r\n En la consulta : " . $sql . " data " . json_encode($parametros), "error");
         } else {
             if ($this->_debug === true) {
                 $sql_temp = "";
@@ -98,17 +99,20 @@ class Database {
                 if ($sql_temp == "")
                     $sql_temp = $sql;
                 if (floatval($tiempo) >= 0.1) {
-                    $this->logDatabase("Error Hora inicio:#-$Hora_Inicio|#-Hora Final:$hora_termina  | Duracion :" . $tiempo . "| :" . self::$_conexion->ErrorMsg() . "\r\n En la consulta : " . $sql_temp . " \n ", "slow");
+                    $this->logDatabase("Error Hora inicio:#-$Hora_Inicio|#-Hora Final:$hora_termina  | usuario " . $this->_user . " | Duracion :" . $tiempo . "| :" . self::$_conexion->ErrorMsg() . "\r\n En la consulta : " . $sql_temp . " data " . json_encode($parametros). " \n ", "slow");
                 } else {
-                    $this->logDatabase("Consulta Realizada Hora inicio:$Hora_Inicio|Hora Final:$hora_termina |Total " . $this->getTotal() . " | Duracion :" . $tiempo . "| \n Consulta :" . $sql_temp . " \n ");
+                    $this->logDatabase("Consulta Realizada Hora inicio:$Hora_Inicio|Hora Final:$hora_termina |Total " . $this->getTotal() . " | usuario " . $this->_user . "| Duracion :" . $tiempo . "| \n Consulta :" . $sql_temp . " data " . json_encode($parametros). " \n ");
                 }
 
             }
         }
     }
 
-    function logDatabase($str) {
+    function logDatabase($str, $type="") {
         $archivo = LOGS . "log_" . $this->_model;
+        if($type != ""){
+          $archivo .= "_". $type;
+        }
         $archivo .= ".txt";
         $fp = fopen($archivo, 'a');
         fputs($fp, "IP " . self::$_conexion->host . ". Fecha " . date("d-m-Y h:i:s A ") . $str . "\n");
