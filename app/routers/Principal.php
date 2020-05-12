@@ -27,7 +27,7 @@ $app->post("/zahira_api/login", function (Request $request, Response $response) 
     }
 });
 
-$app->get("/cerrar_session", function(Request $request, Response $response){
+$app->get("/zahira_api/cerrar_session", function(Request $request, Response $response){
   $usuarios = new Usuarios();
   return $response
     ->withStatus(200)
